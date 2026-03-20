@@ -1,9 +1,9 @@
 // src/services/MulterService.ts
 
-import multer, { FileFilterCallback, Multer, StorageEngine } from "multer";
 import { Request } from "express";
-import path from "path";
 import fs from "fs";
+import multer, { Multer, StorageEngine } from "multer";
+import path from "path";
 
 class MulterService {
   private upload: Multer;

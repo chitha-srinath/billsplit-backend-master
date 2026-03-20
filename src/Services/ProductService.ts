@@ -1,9 +1,9 @@
 // import { UserDTO } from "../DTO/ProductDTO";
-import Repository from "../Repository/BaseRepository";
 import "dotenv-flow/config";
-import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
-import { UserEntity } from "../Entity/UserEntity";
+import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import PasswordManager from "../Utility/PasswordHashing";
+import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
 
 class ProductService {
   private uniqueId: UniqueIDGenerator;
@@ -19,7 +19,7 @@ class ProductService {
   }
 
   public async addProduct(data: any): Promise<any> {
-    let userRepository = new Repository(process.env.PRODUCT_INFO!);
+    let userRepository = new Repository(Constants.PRODUCT_INFO);
 
     // Generate a unique ID for the user
     let uid = this.uniqueId.generate();
@@ -40,7 +40,7 @@ class ProductService {
 
   public async fetchProduct(): Promise<any> {
     // Example response, modify as needed
-    let userRepository = new Repository(process.env.PRODUCT_INFO!);
+    let userRepository = new Repository(Constants.PRODUCT_INFO);
     let result = await userRepository.findMany({});
 
     return result;

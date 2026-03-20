@@ -1,12 +1,13 @@
 // import { UserDTO } from "../DTO/ExpenseDTO";
-import Repository from "../Repository/BaseRepository";
 import "dotenv-flow/config";
+import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
 
 import { ExpenseDTO } from "../DTO/ExpenseDTO";
 import { ExpenseEntity } from "../Entity/ExpenseEntity";
-import GroupsService from "./GroupsService";
 import { DateUtility } from "../Utility/DateUtlity";
+import GroupsService from "./GroupsService";
 
 class ExpenseService {
   private uniqueId: UniqueIDGenerator;
@@ -16,7 +17,7 @@ class ExpenseService {
   }
 
   public async addExpense(data: ExpenseDTO): Promise<any> {
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
     let expense: ExpenseEntity[] = [];
     // Generate a unique ID for the user
     let uid = this.uniqueId.generate();
@@ -50,7 +51,7 @@ class ExpenseService {
 
   // public async fetchExpenses(groupId: string): Promise<any> {
   //   // Example response, modify as needed
-  //   let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+  //   let expenseRepository = new Repository(Constants.EXPENSE_INFO);
   //   let result = await expenseRepository.findMany({ groupId });
 
   //   return result;
@@ -58,7 +59,7 @@ class ExpenseService {
 
   public async fetchExpensebyId(expenseId: string): Promise<any> {
     // Example response, modify as needed
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
     let expenseData = await expenseRepository.findMany({ expenseId });
     let result = [];
     for (let expenseObj of expenseData) {
@@ -80,7 +81,7 @@ class ExpenseService {
   public async getExpensesByGroupId(groupId: string): Promise<any> {
     // list all expenses of a group
     // Example response, modify as needed
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
 
     let getGroupExpenses = await expenseRepository.aggregate([
       {
@@ -116,7 +117,7 @@ class ExpenseService {
   }
 
   public async getHomeBarGraph(userId: string): Promise<any> {
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
     let startingDate = new Date();
     let currentMonth = startingDate.getMonth();
     startingDate.setMonth(currentMonth - 2, 1);
@@ -332,7 +333,7 @@ class ExpenseService {
   public async getHomePieChart(userId: string): Promise<any> {
     // list all expenses of a group
     // Example response, modify as needed
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
 
     // --------startingDate always returns the last 2 month and current month till  date -------
     let startingDate = new Date();

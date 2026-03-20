@@ -1,11 +1,12 @@
 // import { UserDTO } from "../DTO/FriendsDTO";
-import Repository from "../Repository/BaseRepository";
 import "dotenv-flow/config";
+import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
 // import { UserEntity } from "../Entity/UserEntity";
 // import PasswordManager from "../Utility/PasswordHashing";
-import { FriendsEntity, Status } from "../Entity/FriendsEntity";
 import { FriendsDTO, GetFriendsDTO } from "../DTO/FriendsDTO";
+import { FriendsEntity, Status } from "../Entity/FriendsEntity";
 
 class FriendsService {
   private uniqueId: UniqueIDGenerator;
@@ -21,8 +22,8 @@ class FriendsService {
   }
 
   public async sendFriendRequest(data: FriendsDTO): Promise<any> {
-    let friendRepository = new Repository(process.env.FRIEND_INFO!);
-    let userRepository = new Repository(process.env.USER_INFO!);
+    let friendRepository = new Repository(Constants.FRIEND_INFO);
+    let userRepository = new Repository(Constants.USER_INFO);
     let userDetails = await userRepository.getOne({ userId: data?.user1Id });
     let friendDetails = await userRepository.getOne({ userEmail: data?.user2Email });
     let uid = this.uniqueId.generate();
@@ -47,7 +48,7 @@ class FriendsService {
   }
 
   // public async fetchFriends(payloadObj: GetFriendsDTO): Promise<any> {
-  //   let friendRepository = new Repository(process.env.FRIEND_INFO!);
+  //   let friendRepository = new Repository(Constants.FRIEND_INFO);
   //   let queryObj: any = {};
   //   queryObj["user1Id"] = payloadObj.userId;
   //   if (payloadObj?.status && (payloadObj?.status === "accepted" || payloadObj?.status === "rejected" || payloadObj?.status === "pending")) {
@@ -57,7 +58,7 @@ class FriendsService {
   //   return friends;
   // }
   public async fetchFriends(payloadObj: GetFriendsDTO): Promise<any> {
-    const friendRepository = new Repository(process.env.FRIEND_INFO!);
+    const friendRepository = new Repository(Constants.FRIEND_INFO);
     const queryObj: any = {};
     const page = payloadObj?.page || 0;
     const pageSize = 10; // You can adjust this or make it configurable
@@ -103,7 +104,7 @@ class FriendsService {
   }
 
   public async upadateFriendRequest(friendRequestId: string, status: string): Promise<any> {
-    let friendRepository = new Repository(process.env.FRIEND_INFO!);
+    let friendRepository = new Repository(Constants.FRIEND_INFO);
     let friends = await friendRepository.update(
       {
         friendRequestId,
@@ -135,7 +136,7 @@ class FriendsService {
     return friends;
   }
   // public async getFriendRequests(userId: string): Promise<any> {
-  //   let friendRepository = new Repository(process.env.FRIEND_INFO!);
+  //   let friendRepository = new Repository(Constants.FRIEND_INFO);
   //   let friends = await friendRepository.findMany({
   //     user2Id: userId,
   //     status: status === "hidden" ? "hidden" : "pending",
@@ -143,7 +144,7 @@ class FriendsService {
   //   return friends;
   // }
   public async getFriendRequests(userId: string): Promise<any> {
-    let friendRepository = new Repository(process.env.FRIEND_INFO!);
+    let friendRepository = new Repository(Constants.FRIEND_INFO);
     let friends = await friendRepository.findMany({
       user2Id: userId,
       status: "pending",
@@ -152,7 +153,7 @@ class FriendsService {
   }
 
   public async searchFriends(payloadObj: GetFriendsDTO): Promise<any> {
-    const friendRepository = new Repository(process.env.FRIEND_INFO!);
+    const friendRepository = new Repository(Constants.FRIEND_INFO);
     const queryObj: any = {};
 
     // Base query

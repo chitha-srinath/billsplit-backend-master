@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import "dotenv-flow/config";
+import jwt from "jsonwebtoken";
 
 class TokenManager {
   public generateToken(data: any, expiry: string | number) {

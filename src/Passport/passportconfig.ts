@@ -5,6 +5,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 // import { ApiError } from "../utils/ApiError.js";
 import { UserEntity } from "../Entity/UserEntity";
 import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
 import HandleResponse from "../Utility/ResponseHandle";
 
@@ -51,7 +52,7 @@ passport.use(
     },
     async (_: any, __: any, profile: any, next: any) => {
       // Check if the user with email already exist
-      let userRepository = new Repository(process.env.USER_INFO!);
+      let userRepository = new Repository(Constants.USER_INFO);
       const user = await userRepository.getOne({
         userEmail: profile._json.email,
       });
@@ -93,7 +94,7 @@ passport.use(
         // });
         // this.uniqueId = new UniqueIDGenerator();
         let uid = new UniqueIDGenerator().generate();
-        let userRepository = new Repository(process.env.USER_INFO!);
+        let userRepository = new Repository(Constants.USER_INFO);
         let userInfo: UserEntity = {
           userId: uid,
           userName: profile._json.email?.split("@")[0],

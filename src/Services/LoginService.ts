@@ -1,6 +1,7 @@
 import { LoginDTO } from "../DTO/LoginDTO";
 import { UserEntity } from "../Entity/UserEntity";
 import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import TokenManager from "../Utility/JWT_Token";
 import PasswordManager from "../Utility/PasswordHashing";
 import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
@@ -26,7 +27,7 @@ class LoginService implements ISignInServiceInterface {
   }
 
   public async signIn(data: LoginDTO): Promise<any> {
-    let userRepository = new Repository(process.env.USER_INFO!);
+    let userRepository = new Repository(Constants.USER_INFO);
     let { email, password } = data;
     let userData = await userRepository.getOne({
       userEmail: email,
@@ -58,8 +59,8 @@ class LoginService implements ISignInServiceInterface {
   }
 
   public async signUp(data: LoginDTO): Promise<any> {
-    let userRepository = new Repository(process.env.USER_INFO!);
-    let frndRepository = new Repository(process.env.FRIEND_INFO!);
+    let userRepository = new Repository(Constants.USER_INFO);
+    let frndRepository = new Repository(Constants.FRIEND_INFO);
     let { email, password, userName } = data;
     let userData = await userRepository.getOne({ email });
     if (userData) {
@@ -87,7 +88,7 @@ class LoginService implements ISignInServiceInterface {
   }
 
   public async signOut(data: any): Promise<any> {
-    let userRepository = new Repository(process.env.USER_INFO!);
+    let userRepository = new Repository(Constants.USER_INFO);
     if (data?.userEmail) {
       let userInfo = await userRepository.getOne({ userEmail: data.userEmail });
       if (userInfo) {
@@ -110,7 +111,7 @@ class LoginService implements ISignInServiceInterface {
   }
 
   public async googleLogin(data: any): Promise<any> {
-    let userRepository = new Repository(process.env.USER_INFO!);
+    let userRepository = new Repository(Constants.USER_INFO);
 
     let userData = await userRepository.getOne({ userEmail: data?.userEmail });
     if (!userData) {

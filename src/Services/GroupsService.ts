@@ -1,6 +1,7 @@
 // import { UserDTO } from "../DTO/GroupsDTO";
-import Repository from "../Repository/BaseRepository";
 import "dotenv-flow/config";
+import Repository from "../Repository/BaseRepository";
+import { Constants } from "../Utility/Constants";
 import UniqueIDGenerator from "../Utility/RandomUniqueIdGenerator";
 // import { UserEntity } from "../Entity/UserEntity";
 // import PasswordManager from "../Utility/PasswordHashing";
@@ -21,7 +22,7 @@ class GroupsService {
   }
 
   public async addGroups(data: GroupsDTO): Promise<any> {
-    let groupRepository = new Repository(process.env.GROUP_INFO!);
+    let groupRepository = new Repository(Constants.GROUP_INFO);
 
     // Generate a unique ID for the user
     let uid = this.uniqueId.generate();
@@ -52,7 +53,7 @@ class GroupsService {
 
   // public async fetchGroups(userId: string): Promise<any> {
   //   // Example response, modify as needed
-  //   let groupRepository = new Repository(process.env.GROUP_INFO!);
+  //   let groupRepository = new Repository(Constants.GROUP_INFO);
   //   let result = await groupRepository.findMany(
   //     { "groupUsers.userId": userId },
   //     {
@@ -74,7 +75,7 @@ class GroupsService {
     searchTerm: string;
   }): Promise<any> {
     const { userId, filter, page, limit, searchTerm } = payload;
-    const groupRepository = new Repository(process.env.GROUP_INFO!);
+    const groupRepository = new Repository(Constants.GROUP_INFO);
 
     let matchObj: any = { "groupUsers.userId": userId };
 
@@ -122,7 +123,7 @@ class GroupsService {
 
   public async fetchGroupbyId(groupId: string): Promise<any> {
     // Example response, modify as needed
-    let groupRepository = new Repository(process.env.GROUP_INFO!);
+    let groupRepository = new Repository(Constants.GROUP_INFO);
     let result = await groupRepository.getOne({ groupId });
 
     let resultObj = {
@@ -137,8 +138,8 @@ class GroupsService {
 
   public async userOwedOrOwe(groupId: string, userId: string): Promise<any> {
     // Move repository instances outside if used frequently across functions
-    const groupRepository = new Repository(process.env.GROUP_INFO!);
-    const expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    const groupRepository = new Repository(Constants.GROUP_INFO);
+    const expenseRepository = new Repository(Constants.EXPENSE_INFO);
 
     // Fetch group information only once
     const result = await groupRepository.getOne({ groupId });
@@ -230,8 +231,8 @@ class GroupsService {
 
   public async groupUsersBalance(groupId: string): Promise<any> {
     // Initialize repositories
-    const groupRepository = new Repository(process.env.GROUP_INFO!);
-    const expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    const groupRepository = new Repository(Constants.GROUP_INFO);
+    const expenseRepository = new Repository(Constants.EXPENSE_INFO);
 
     // Fetch group data and users within the group
     const result = await groupRepository.getOne({ groupId });
@@ -325,7 +326,7 @@ class GroupsService {
   public async userGroupBalance(groupId: string, userId: string): Promise<any> {
     // single user balance of each group
     // Example response, modify as needed
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
 
     let aggregateQuery = [
       {
@@ -405,8 +406,8 @@ class GroupsService {
     // update user balances based on expenses
     // Example response, modify as needed
 
-    let groupRepository = new Repository(process.env.GROUP_INFO!);
-    let expenseRepository = new Repository(process.env.EXPENSE_INFO!);
+    let groupRepository = new Repository(Constants.GROUP_INFO);
+    let expenseRepository = new Repository(Constants.EXPENSE_INFO);
     // let result = await groupRepository.getOne({ groupId });
     // let allUsers: userBalance[] = result?.groupUsers;
     let usersBalancesData = await this.groupUsersBalance(groupId);
@@ -456,7 +457,7 @@ class GroupsService {
   }
 
   public async userHomeInfo(userId: string): Promise<any> {
-    let groupRepository = new Repository(process.env.GROUP_INFO!);
+    let groupRepository = new Repository(Constants.GROUP_INFO);
 
     let aggregateQuery = [
       {

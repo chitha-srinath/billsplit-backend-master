@@ -24,7 +24,7 @@
 //   }
 
 //   public async addUser(data: UserDTO): Promise<any> {
-//     let userRepository = new Repository(process.env.USER_INFO!);
+//     let userRepository = new Repository(Constants.USER_INFO);
 
 //     // Generate a unique ID for the user
 //     let uid = this.uniqueId.generate();
@@ -48,7 +48,7 @@
 
 //   public async fetchUser(): Promise<any> {
 //     // Example response, modify as needed
-//     let userRepository = new Repository(process.env.USER_INFO!);
+//     let userRepository = new Repository(Constants.USER_INFO);
 //     let result = await userRepository.getAll();
 
 //     return { message: "sucessful data fetched", result };
