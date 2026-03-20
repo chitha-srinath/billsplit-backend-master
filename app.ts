@@ -41,6 +41,7 @@ class App {
     // this.app.use(passport.session()); // persistent login sessions
     this.app.use(express.urlencoded({ extended: true }));
     this.app.get("/", (_, res: Response) => {
+      console.log("server running successfully");
       res.status(200).send("server running successfully");
     });
   }
