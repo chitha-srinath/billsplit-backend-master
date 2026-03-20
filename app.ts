@@ -5,7 +5,7 @@ import AppRoutes from "./src/Routes/RoutesConfig";
 import HandleResponse, { ApiResponse } from "./src/Utility/ResponseHandle";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
-import passport from "./src/Passport/passportconfig";
+// import passport from "./src/Passport/passportconfig";
 import session from "express-session";
 
 class App {
@@ -37,8 +37,8 @@ class App {
         saveUninitialized: true,
       })
     ); // session secret
-    this.app.use(passport.initialize());
-    this.app.use(passport.session()); // persistent login sessions
+    // this.app.use(passport.initialize());
+    // this.app.use(passport.session()); // persistent login sessions
     this.app.use(express.urlencoded({ extended: true }));
     this.app.get("/", (_, res: Response) => {
       res.status(200).send("server running successfully");

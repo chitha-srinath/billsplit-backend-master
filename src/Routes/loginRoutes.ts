@@ -4,7 +4,7 @@ import LoginController, {
 } from "../Controller/LoginController";
 import LoginService from "../Services/LoginService";
 import Authentication from "../Middlewares/Authentication";
-import passport from "../Passport/passportconfig";
+// import passport from "../Passport/passportconfig";
 
 class LoginRoutes {
   private readonly router: Router;
@@ -34,21 +34,21 @@ class LoginRoutes {
         this.loginController.logout.bind(this.loginController)
       );
 
-    this.router.route("/google").get(
-      passport.authenticate("google", {
-        scope: ["profile", "email"],
-      }),
-      (_, res) => {
-        res.send("redirecting to google...");
-      }
-    );
+    // this.router.route("/google").get(
+    //   passport.authenticate("google", {
+    //     scope: ["profile", "email"],
+    //   }),
+    //   (_, res) => {
+    //     res.send("redirecting to google...");
+    //   }
+    // );
 
-    this.router
-      .route("/google/callback")
-      .get(
-        passport.authenticate("google"),
-        this.loginController.handleGoogleLogin.bind(this.loginController)
-      );
+    //   this.router
+    //     .route("/google/callback")
+    //     .get(
+    //       passport.authenticate("google"),
+    //       this.loginController.handleGoogleLogin.bind(this.loginController)
+    //     );
   }
 
   public getRoutes(): Router {
