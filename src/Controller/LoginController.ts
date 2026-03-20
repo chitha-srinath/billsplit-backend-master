@@ -14,7 +14,7 @@ export interface ILoginControllerInterface {
 }
 
 class LoginController implements ILoginControllerInterface {
-  constructor(private loginService: ISignInServiceInterface) {}
+  constructor(private loginService: ISignInServiceInterface) { }
 
   public async login(req: Request, res: Response): Promise<any> {
     try {
